@@ -1,8 +1,5 @@
-# Chatbot with Memory 
-
-Chatbot with LLM is a GPT model, Generative AI and NLP base project for chatbot.
-
-Training: Few shot Learning
+# lang_chain_memory_bot
+Chatbot powered by opensource LLM with Langchain memory and flask
 
 ## Installation
 
@@ -12,9 +9,38 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install all dep
 pip install -r requirements.txt
 ```
 
+Goto /data directory
+
+Update dataprovider.py by add your Hugginging face key and OpenAI key for 
+```python
+key = ''
+hg_key =""
+```
+### Choose LLM for Chatbot, Goto chatbot_memory.py file and open in code editor 
+goto code line 68:
+
+```python
+index = build_sentence_window_index(
+    [document],
+    #llm=OpenAI(model="gpt-3.5-turbo", temperature=0.1,api_key=key),
+    #llm = GPT4All("mistral-7b-openorca.gguf2.Q4_0.gguf"),
+    llm = GPT4All(model=r'C:\Users\91941\.cache\gpt4all\mistral-7b-openorca.gguf2.Q4_0.gguf'), #Replace this path with your model path
+    save_dir="./sentence_index",
+)
+```
+1. if you want to use OpenAI LLM then uncomment code line 70 and comment 72 line
+2. if you want to use opensource LLM mistral 7b through gpt4all
+  Run below python file to download gpt4all model locally
+```python
+Python download_gpt4all_model.py
+```
+4. then you need to update path for model in code line 72 as per your machine path
+   
+   
+
 ## Usage of Project
 
-Run below python file to productionize GPT 3.5 turbo based Chatbot with flask API
+Run below python file to productionize Chatbot powered by opensource LLM and RAG with llama index and flask
 ```python
 Python chatbot_memory.py
 ```
@@ -28,3 +54,4 @@ Please make sure to update tests as appropriate.
 ## License
 
 [GNU](https://choosealicense.com/licenses/gpl-3.0/)
+
