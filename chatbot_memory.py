@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, jsonify
 import openai
-from data.dataprovider import key, hg_key
+#from data.dataprovider import key, hg_key
 from langchain.embeddings import HuggingFaceEmbeddings
 #from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
@@ -15,13 +15,15 @@ from langchain_core.prompts import PromptTemplate
 from langchain.chains import ConversationChain
 import re
 from langchain.chains.conversation.memory import ConversationBufferMemory
+from langchain.llms import GPT4All
 
 
 app = Flask(__name__)
 
 memory = ConversationBufferMemory() 
-
-llm = HuggingFaceHub(
+#llm = GPT4All(model=r'C:\Users\91941\.cache\gpt4all\orca-mini-3b-gguf2-q4_0.gguf')
+llm = GPT4All(model=r'C:\Users\91941\.cache\gpt4all\mistral-7b-openorca.gguf2.Q4_0.gguf')
+"""llm = HuggingFaceHub(
     repo_id="HuggingFaceH4/zephyr-7b-beta",
     task="text-generation",
     model_kwargs={
@@ -31,7 +33,7 @@ llm = HuggingFaceHub(
         "repetition_penalty": 1.03,
     },
     huggingfacehub_api_token= hg_key,# Replace with your actual huggingface token
-)
+)"""
 
 from langchain_core.prompts import HumanMessagePromptTemplate, MessagesPlaceholder, SystemMessagePromptTemplate, StringPromptTemplate
 
@@ -52,16 +54,17 @@ def home():
 def chat():
     user_message = request.form['user_input']
     bot_message = chat_with_rag(user_message)
-    
+    print(bot_message)
     pattern = r"AI: ([\s\S]+?)(?=Human:|$)"
     matches = re.findall(pattern, bot_message['response'])
 
     if matches:
         last_ai_message = matches[-1].strip()        
-        return jsonify({'response': last_ai_message})
+        return jsonify({'response': last_ai_message})  
+        
     else:
         
-        return jsonify({'response': "No AI messages found."})
+        return jsonify({'response':  bot_message['response']})
     
 
 if __name__ == '__main__':
