@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, jsonify
 import openai
-#from data.dataprovider import key, hg_key
+from data.dataprovider import key, hg_key
 from langchain.embeddings import HuggingFaceEmbeddings
 #from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
@@ -20,7 +20,8 @@ from langchain.llms import GPT4All
 
 app = Flask(__name__)
 
-memory = ConversationBufferMemory() 
+memory = ConversationBufferMemory()
+#llm=OpenAI(model="gpt-3.5-turbo", temperature=0.1,api_key=key),
 #llm = GPT4All(model=r'C:\Users\91941\.cache\gpt4all\orca-mini-3b-gguf2-q4_0.gguf')
 llm = GPT4All(model=r'C:\Users\91941\.cache\gpt4all\mistral-7b-openorca.gguf2.Q4_0.gguf')
 """llm = HuggingFaceHub(
