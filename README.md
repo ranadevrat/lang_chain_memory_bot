@@ -1,4 +1,4 @@
-# Chatbot with LLM
+# Chatbot with Memory 
 
 Chatbot with LLM is a GPT model, Generative AI and NLP base project for chatbot.
 
