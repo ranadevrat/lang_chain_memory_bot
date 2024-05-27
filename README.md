@@ -14,8 +14,6 @@ pip install -r requirements.txt
 
 ## Usage of Project
 
-Goto /Chatbot_GPT_3.5_LLM directory
-
 Run below python file to productionize GPT 3.5 turbo based Chatbot with flask API
 ```python
 Python meetup_chatbot.py
